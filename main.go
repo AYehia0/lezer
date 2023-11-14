@@ -12,6 +12,7 @@ import (
 var Addr = "0.0.0.0"    // localhost
 var Port = "8069"       // the port the server is running on
 var IgnoreHidden = true // ignore the hidden files/dir
+var DownloadLocation = "/home/none/test/"
 
 func main() {
 	// TODO: this is a basic arg parsing, use something better
@@ -24,17 +25,19 @@ func main() {
 	if !utils.IsValidPath(serveDir) {
 		log.Fatalf("Serve Path is not a vaild path!")
 	}
-	log.Printf("Server is serving files in : %s\n", serveDir)
-
 	server := server.NewServer(Addr, Port)
 
 	// configs
 	server.ServerDir = serveDir
+	server.Config.BrowseRoute = "browse"
 	server.Ip = fmt.Sprintf("%s:%s/", utils.GetMachineIp(), Port)
+	server.DownloadLocation = DownloadLocation
 	server.IgnoreHidden = IgnoreHidden
 
 	// show the QR to scan
+	fmt.Println()
 	utils.GenerateQRCode(server.Ip)
+	fmt.Printf("\n\nShare Files : http://%s\n", server.Ip)
 
 	server.StartServer()
 }

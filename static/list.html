@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{ $relativePath := .relativePath }}
+    {{ $BrowseRoute := .BrowseRoute }}
     <title>In {{ .relativePath }}</title>
 
     <style>
@@ -113,6 +114,7 @@
 		  ul {
 			display: flex;
 			flex-wrap: wrap;
+            flex-direction: column
 		  }
 		  ul li {
 			width: 230px;
@@ -141,13 +143,13 @@
       <header>
         <h1>
           <i>Index of&nbsp;</i>
-            <a href="/browse{{ .currentDir }}">{{ .currentDir }}</a>
+            <a href="/{{ $BrowseRoute }}{{ .currentDir }}">{{ .currentDir }}</a>
         </h1>
       </header>
       <ul id="files">
           {{ range .files}}
               <li>
-                  <a href="/browse{{ $relativePath }}/{{ .Name }}" title="{{ .Name }}" class="{{ .Type }}">{{ .Name }}</a>
+                  <a href="/{{ $BrowseRoute }}{{ $relativePath }}/{{ .Name }}" title="{{ .Name }}" class="{{ .Type }}">{{ .Name }}</a>
               </li>
           {{ end }}
       </ul>

@@ -38,6 +38,14 @@ func IsValidPath(path string) bool {
 	return false
 }
 
+// check if path is dir or file
+func IsDownloadable(path string) bool {
+	if _, err := os.ReadDir(path); err != nil {
+		return true
+	}
+	return false
+}
+
 // returns the full-path of the files and dir
 func GetAllInDir(serverDir, baseDir string, ignoreHidden bool) ([]Item, error) {
 	// retunr [] items, item can be dir, or file (not dir)

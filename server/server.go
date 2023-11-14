@@ -6,14 +6,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// all the route and secret configs
+type Config struct {
+	BrowseRoute string
+}
+
 type Server struct {
-	Addr         string
-	Port         string
-	ServerDir    string // the given path by the user
-	CurrentDir   string // the current dir/path in the browser
-	Ip           string
-	IgnoreHidden bool
-	router       *gin.Engine
+	Addr             string
+	Port             string
+	ServerDir        string // the given path by the user
+	CurrentDir       string // the current dir/path in the browser
+	Ip               string
+	DownloadLocation string
+	IgnoreHidden     bool
+	router           *gin.Engine
+	Config           Config
 }
 
 func noCacheMiddleware() gin.HandlerFunc {
@@ -29,7 +36,12 @@ func noCacheMiddleware() gin.HandlerFunc {
 
 // creates the gin engine server
 func (s *Server) setupServer() {
-	router := gin.Default()
+
+	// Gin
+	gin.SetMode(gin.ReleaseMode)
+
+	// the router
+	router := gin.New()
 
 	// serving static files
 	router.LoadHTMLGlob("./static/*.html")
@@ -37,7 +49,9 @@ func (s *Server) setupServer() {
 
 	// defining the routes here
 	// TODO: There must be something better than *, cons : / at the end, allows multiple ///
-	router.GET("/browse/*dir", s.serveFiles)
+	router.GET("/", s.handleMainIndex)
+	router.GET(fmt.Sprintf("/%s/*dir", s.Config.BrowseRoute), s.serveFiles)
+	router.POST("/share", s.uploadFiles)
 
 	s.router = router
 }
