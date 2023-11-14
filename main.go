@@ -34,7 +34,7 @@ func main() {
 	server.IgnoreHidden = IgnoreHidden
 
 	// show the QR to scan
-	utils.GenerateQRCode(server.Ip, "123")
+	utils.GenerateQRCode(server.Ip)
 
 	server.StartServer()
 }
