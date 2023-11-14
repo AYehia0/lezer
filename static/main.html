@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>upload</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+
+    <style type="text/css">
+        body {
+            background-color: #005bff47;
+            margin: 0;
+        }
+
+        #uploadForm {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #share-container {
+            padding: 16px;
+            background-color: blueviolet;
+            border: 5px solid #181818;
+            font-size: 20px;
+            font-size: 2vw;
+            font-family: monospace;
+            box-sizing: content-box;
+            font-weight: bolder;
+            text-align: center;
+            color: #181818;
+        }
+        
+        a {
+            font-size: 20px;
+            font-size: 2vw;
+            font-family: monospace;
+            font-weight: bolder;
+        }
+
+        #share-container {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <body>
+        <form ref='uploadForm' 
+          id='uploadForm' 
+          action='/upload' 
+          method='post' 
+          encType="multipart/form-data">
+            <div id="share-container">
+                <label id="share" for="file-input" class="btn">Share file🚀</label>
+            </div>
+            <a href="{{ .ipAddr }}" target="_blank">View directory📁<a/>
+            <input id="file-input" type="file" name="selected" style="visibility:hidden; display:none;"/>
+        </form>
+    </body>
+
+    <script>
+        document.getElementById("file-input").onchange = function() {
+            document.getElementById("uploadForm").submit();
+            document.getElementById("share").innerText = "Sending...";
+        };
+    </script>
+
+</html>
