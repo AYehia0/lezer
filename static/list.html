@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Files within: DIR</title>
     {{ $relativePath := .relativePath }}
+    <title>In {{ .relativePath }}</title>
 
     <style>
 		body {
@@ -141,7 +141,7 @@
       <header>
         <h1>
           <i>Index of&nbsp;</i>
-            <a href="{{ .currentDir }}">{{ .currentDir }}</a>
+            <a href="/browse{{ .currentDir }}">{{ .currentDir }}</a>
         </h1>
       </header>
       <ul id="files">
