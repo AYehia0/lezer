@@ -12,7 +12,7 @@ import (
 
 // handle the main route : the index page
 func (server *Server) handleMainIndex(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "main.html", gin.H{
+	ctx.HTML(http.StatusOK, "/static/main.html", gin.H{
 		"BrowseRoute": template.URL(server.Config.BrowseRoute),
 	})
 }
@@ -44,7 +44,7 @@ func (server *Server) serveFiles(ctx *gin.Context) {
 		ctx.JSON(http.StatusNoContent, fmt.Sprintf("Path not found: %s  \nError: %s", currentAbs, err))
 		return
 	}
-	ctx.HTML(http.StatusOK, "list.html", gin.H{
+	ctx.HTML(http.StatusOK, "/static/list.html", gin.H{
 		"files":        items,
 		"currentDir":   template.URL(server.ServerDir),
 		"relativePath": template.URL(filepath.Clean(currentDir)),
@@ -66,5 +66,5 @@ func (server *Server) uploadFiles(ctx *gin.Context) {
 		return
 	}
 
-	ctx.HTML(http.StatusOK, "upload_success.html", gin.H{"url": template.URL(server.DownloadLocation)})
+	ctx.HTML(http.StatusOK, "/static/upload_success.html", gin.H{"url": template.URL(server.DownloadLocation)})
 }

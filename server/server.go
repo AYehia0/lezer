@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 
+	"github.com/AYehia0/lezer/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -44,7 +45,12 @@ func (s *Server) setupServer() {
 	router := gin.New()
 
 	// serving static files
-	router.LoadHTMLGlob("./static/*.html")
+	t, err := utils.LoadTemplate()
+	if err != nil {
+		panic(err)
+	}
+	router.SetHTMLTemplate(t)
+	// router.LoadHTMLGlob("static/*.html")
 	router.Use(noCacheMiddleware())
 
 	// defining the routes here
